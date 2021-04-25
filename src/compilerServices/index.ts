@@ -21,6 +21,7 @@
 import { CompilerService, Language } from "./types";
 import { RustService } from "./rustService";
 import { ClangService } from "./clangService";
+import { VerilogService } from "./verilogService";
 import { X86Service } from "./x86Service";
 
 export {
@@ -41,6 +42,9 @@ export async function createCompilerService(from: Language, to: Language): Promi
   }
   if (from === Language.Wasm && to === Language.x86) {
     return new X86Service();
+  }
+  if (from === Language.Verilog) {
+    return new VerilogService(from);
   }
   throw new Error(`createCompilerService: not supported ${from}->${to}`);
 }

@@ -24,6 +24,7 @@ export enum ServiceTypes {
   Rustc,
   Cargo,
   Clang,
+  Verilog,
   Service
 }
 
@@ -52,6 +53,8 @@ export async function getServiceURL(to: ServiceTypes): Promise<string> {
       return config.cargo;
     case ServiceTypes.Clang:
       return config.clang;
+    case ServiceTypes.Verilog:
+      return config.verilog;
     case ServiceTypes.Service:
       return config.serviceUrl;
     default:
@@ -74,6 +77,11 @@ export async function parseJSONResponse(response: Response): Promise < IServiceR
 
 export async function sendRequestJSON(content: Object, to: ServiceTypes): Promise < IServiceRequest > {
   const url = await getServiceURL(to);
+
+  # TODO REMOVE
+  console.log("URL: " + url);
+  console.log("BODY: " + JSON.stringify(content));
+
   const response = await fetch(url, {
     method: "POST",
     body: JSON.stringify(content),
